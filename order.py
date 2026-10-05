@@ -5,14 +5,12 @@ app = Flask(__name__)
 DATABASE = "bakery.db"
 
 
-# Database connection
 def get_db():
     db = sqlite3.connect(DATABASE)
     db.row_factory = sqlite3.Row
     return db
 
 
-# Create tables
 def create_tables():
     db = get_db()
 
@@ -55,9 +53,6 @@ def create_tables():
     db.close()
 
 
-# ================= USERS =================
-
-# Create user
 @app.route("/users", methods=["POST"])
 def create_user():
     data = request.json
@@ -88,7 +83,6 @@ def create_user():
         db.close()
 
 
-# Get all users
 @app.route("/users", methods=["GET"])
 def get_users():
     db = get_db()
@@ -98,7 +92,6 @@ def get_users():
     return jsonify([dict(user) for user in users])
 
 
-# Get one user
 @app.route("/users/<int:id>", methods=["GET"])
 def get_user(id):
     db = get_db()
@@ -113,7 +106,6 @@ def get_user(id):
     return jsonify({"error": "User not found"}), 404
 
 
-# Update user
 @app.route("/users/<int:id>", methods=["PUT"])
 def update_user(id):
     data = request.json
@@ -141,7 +133,6 @@ def update_user(id):
     return jsonify({"error": "User not found"}), 404
 
 
-# Delete user
 @app.route("/users/<int:id>", methods=["DELETE"])
 def delete_user(id):
     db = get_db()
@@ -159,9 +150,6 @@ def delete_user(id):
     return jsonify({"error": "User not found"}), 404
 
 
-# ================= PRODUCTS =================
-
-# Create product
 @app.route("/products", methods=["POST"])
 def create_product():
     data = request.json
@@ -191,7 +179,6 @@ def create_product():
     })
 
 
-# Get products
 @app.route("/products", methods=["GET"])
 def get_products():
     db = get_db()
@@ -201,7 +188,6 @@ def get_products():
     return jsonify([dict(product) for product in products])
 
 
-# Get one product
 @app.route("/products/<int:id>", methods=["GET"])
 def get_product(id):
     db = get_db()
@@ -218,7 +204,6 @@ def get_product(id):
     return jsonify({"error": "Product not found"}), 404
 
 
-# Update product
 @app.route("/products/<int:id>", methods=["PUT"])
 def update_product(id):
     data = request.json
@@ -248,7 +233,6 @@ def update_product(id):
     return jsonify({"error": "Product not found"}), 404
 
 
-# Delete product
 @app.route("/products/<int:id>", methods=["DELETE"])
 def delete_product(id):
     db = get_db()
@@ -266,9 +250,6 @@ def delete_product(id):
     return jsonify({"error": "Product not found"}), 404
 
 
-# ================= ORDERS =================
-
-# Create order
 @app.route("/orders", methods=["POST"])
 def create_order():
     data = request.json
@@ -301,7 +282,6 @@ def create_order():
     })
 
 
-# Get all orders
 @app.route("/orders", methods=["GET"])
 def get_orders():
     db = get_db()
@@ -326,7 +306,6 @@ def get_orders():
     return jsonify([dict(order) for order in orders])
 
 
-# Get one order
 @app.route("/orders/<int:id>", methods=["GET"])
 def get_order(id):
     db = get_db()
@@ -349,7 +328,6 @@ def get_order(id):
     return jsonify({"error": "Order not found"}), 404
 
 
-# Update order
 @app.route("/orders/<int:id>", methods=["PUT"])
 def update_order(id):
     data = request.json
@@ -375,7 +353,6 @@ def update_order(id):
     return jsonify({"error": "Order not found"}), 404
 
 
-# Delete order
 @app.route("/orders/<int:id>", methods=["DELETE"])
 def delete_order(id):
     db = get_db()
@@ -393,7 +370,6 @@ def delete_order(id):
     return jsonify({"error": "Order not found"}), 404
 
 
-# Home
 @app.route("/")
 def home():
     return jsonify({
@@ -402,7 +378,6 @@ def home():
     })
 
 
-# Run server
 if __name__ == "__main__":
     create_tables()
     app.run(host="0.0.0.0", port=5000, debug=True)
